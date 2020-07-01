@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTechnoStar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        DataContext="{x:Type local:ViewModel}">
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:ViewModel></local:ViewModel>
+    </Window.DataContext>
     <Grid>
         
         <StackPanel Margin="10"  HorizontalAlignment="Left"  Width ="250">
-            <TextBox></TextBox>
-            <Button HorizontalAlignment ="Right"  Width="100">Записать</Button>
-            <ComboBox></ComboBox>
+            <TextBox Text="{Binding Path=TextData}"></TextBox>
+            <Button HorizontalAlignment ="Right"  Width="100" Click="OnSaveButtonClick">Записать</Button>
+            <ComboBox>
+
+            </ComboBox>
             
         </StackPanel>
     </Grid>

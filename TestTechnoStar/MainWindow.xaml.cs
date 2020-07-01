@@ -24,5 +24,11 @@ namespace TestTechnoStar
         {
             InitializeComponent();
         }
+
+        private void OnSaveButtonClick(object sender, RoutedEventArgs e)
+        {
+            ((ViewModel) (DataContext)).SetText();
+        }
+
     }
 }
