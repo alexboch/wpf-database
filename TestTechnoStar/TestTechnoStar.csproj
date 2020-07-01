@@ -67,6 +67,8 @@
     <Compile Include="Database\Context.cs" />
     <Compile Include="Database\DataEntry.cs" />
     <Compile Include="Database\LogEntry.cs" />
+    <Compile Include="PlaceholderLogDataEntry.cs" />
+    <Compile Include="ILogDataEntry.cs" />
     <Compile Include="LogEntryWithData.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">

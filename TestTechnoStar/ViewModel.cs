@@ -11,7 +11,7 @@ namespace TestTechnoStar
     internal class ViewModel
     {
 
-        public ObservableCollection<LogEntryWithData> LogDataEntries { get; set; } = new ObservableCollection<LogEntryWithData>();
+        public ObservableCollection<object> LogDataEntries { get; set; } = new ObservableCollection<object>();
 
         /// <summary>
         /// Вводимые текстовые данные
@@ -21,16 +21,20 @@ namespace TestTechnoStar
         /// <summary>
         /// Выбранное в списке значение
         /// </summary>
-        public LogEntryWithData SelectedLogDataEntry { get; set; }
+        public ILogDataEntry SelectedLogDataEntry { get; set; }
 
         public void SetText()
         {
-            if (SelectedLogDataEntry != null)
+            if (SelectedLogDataEntry is LogEntryWithData dataLogEntry)
             {
-                //Если выбрано значение в списке, то редактируем его
-                EditSelectedEntry();
+                using (var context = new Context())
+                {
+                    //Если выбрано значение в списке, то редактируем его
+                    dataLogEntry.Text = TextData;
+                    context.SaveChanges();
+                }
             }
-            else
+            else if(SelectedLogDataEntry is PlaceholderLogDataEntry)
             {
                 //Если значение в списке не выбрано, добавим новую запись
                 AddNewEntry();
@@ -42,8 +46,10 @@ namespace TestTechnoStar
             using (var context = new Context())
             {
                 var dataEntry = new DataEntry {Text = TextData};
+                //Добавляем запись в первую таблицу
                 context.DataEntries.Add(dataEntry);
                 var logEntry = new LogEntry {CreatedDate = DateTime.Now, Data = dataEntry};
+                //Добавляем запись во вторую таблицу
                 context.LogEntries.Add(logEntry);
                 var logDataEntry = new LogEntryWithData(logEntry, dataEntry);
                 LogDataEntries.Add(logDataEntry);
@@ -51,14 +57,6 @@ namespace TestTechnoStar
             }
         }
 
-        private void EditSelectedEntry()
-        {
-            using (var context = new Context())
-            {
-                SelectedLogDataEntry.DataEntryObject.Text = TextData;
-                context.SaveChanges();
-            }
-        }
 
         private void RefreshList()
         {
