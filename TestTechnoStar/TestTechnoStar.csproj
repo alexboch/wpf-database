@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BooleanToVisibilityConverterInv.cs" />
     <Compile Include="Database\Context.cs" />
     <Compile Include="Database\DataEntry.cs" />
     <Compile Include="Database\LogEntry.cs" />

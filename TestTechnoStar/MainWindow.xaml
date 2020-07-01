@@ -10,10 +10,12 @@
     <Grid>
         <Grid.Resources>
             <CollectionViewSource x:Key="LogDataList" Source="{Binding Path=LogDataEntries}" />
+            <local:BooleanToVisibilityConverterInv x:Key="BooleanToVisibilityConverterInv"/>
         </Grid.Resources>    
-        <StackPanel Margin="10"  HorizontalAlignment="Left"  Width ="250">
+        <StackPanel Margin="10"  HorizontalAlignment="Left"  Width ="300">
+            <TextBlock Text="Загрузка..."  Visibility="{Binding Path=DataLoaded, Converter={StaticResource BooleanToVisibilityConverterInv}}" /> 
             <TextBox IsEnabled="{Binding Path=DataLoaded}"  Text="{Binding Path=SelectedLogDataEntry.Text, UpdateSourceTrigger=LostFocus}"></TextBox>
-            <Button IsEnabled="{Binding Path=DataLoaded}" HorizontalAlignment ="Right"  Width="100" Click="OnSaveButtonClick">Записать</Button>
+            <Button IsEnabled="{Binding Path=DataLoaded}" HorizontalAlignment ="Right"  Width="100" Click="OnSaveButtonClick">Записать в БД</Button>
             <ComboBox SelectedIndex ="0"  SelectedValue="{Binding Path=SelectedLogDataEntry, Mode=OneWayToSource}">
                 <ComboBox.Resources>
                     <DataTemplate DataType="{x:Type local:PlaceholderLogDataEntry}">
@@ -23,10 +25,11 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"></ColumnDefinition>
-                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text ="{Binding Path=Text}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Path=CreationDate}"/>
+                            
+                            <TextBlock TextTrimming="CharacterEllipsis"  Text ="{Binding Path=Text}"/>
+                            <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="1" Text="{Binding Path=CreationDate}"/>
                         </Grid>
                     </DataTemplate>
                 </ComboBox.Resources>
