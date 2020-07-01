@@ -8,5 +8,11 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         
+        <StackPanel Margin="10"  HorizontalAlignment="Left"  Width ="250">
+            <TextBox></TextBox>
+            <Button HorizontalAlignment ="Right"  Width="100">Записать</Button>
+            <ComboBox></ComboBox>
+            
+        </StackPanel>
     </Grid>
 </Window>
