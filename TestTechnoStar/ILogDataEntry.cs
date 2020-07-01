@@ -8,6 +8,6 @@ namespace TestTechnoStar
 {
     interface ILogDataEntry
     {
-        string Text { get; }
+        string Text { get; set; }
     }
 }

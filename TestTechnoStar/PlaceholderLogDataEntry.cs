@@ -8,12 +8,7 @@ namespace TestTechnoStar
 {
     class PlaceholderLogDataEntry : ILogDataEntry
     {
-        private string _text;
 
-        public string Text
-        {
-            get => string.Empty;
-            set => _text = value;
-        }
+        public string Text { get; set; }
     }
 }

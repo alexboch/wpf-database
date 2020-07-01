@@ -15,9 +15,9 @@
             <CollectionViewSource x:Key="LogDataList" Source="{Binding Path=LogDataEntries}" />
         </Grid.Resources>    
         <StackPanel Margin="10"  HorizontalAlignment="Left"  Width ="250">
-            <TextBox Text="{Binding Path=TextData}"></TextBox>
+            <TextBox Text="{Binding Path=SelectedLogDataEntry.Text, UpdateSourceTrigger=LostFocus}"></TextBox>
             <Button HorizontalAlignment ="Right"  Width="100" Click="OnSaveButtonClick">Записать</Button>
-            <ComboBox SelectedIndex ="0"  SelectedValue="{Binding Path=SelectedLogDataEntry, Mode=OneWay}">
+            <ComboBox SelectedIndex ="0"  SelectedValue="{Binding Path=SelectedLogDataEntry, Mode=OneWayToSource}">
                 <ComboBox.Resources>
                     <DataTemplate DataType="{x:Type local:PlaceholderLogDataEntry}">
                         <TextBlock Text="Не выбрано"></TextBlock>
@@ -25,8 +25,8 @@
                     <DataTemplate DataType="{x:Type local:LogEntryWithData}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
+                                <ColumnDefinition Width="100"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text ="{Binding Path=Text}"/>
                             <TextBlock Grid.Column="1" Text="{Binding Path=CreationDate}"/>
@@ -35,9 +35,7 @@
                 </ComboBox.Resources>
                 <ComboBox.ItemsSource>
                     <CompositeCollection>
-                        <ComboBoxItem Foreground="Black">
-                            <local:PlaceholderLogDataEntry></local:PlaceholderLogDataEntry>
-                        </ComboBoxItem>
+                        <local:PlaceholderLogDataEntry></local:PlaceholderLogDataEntry>
                         <CollectionContainer Collection="{Binding Source={StaticResource LogDataList}}" />
                     </CompositeCollection>
                 </ComboBox.ItemsSource>
