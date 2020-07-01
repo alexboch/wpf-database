@@ -46,13 +46,9 @@ namespace TestTechnoStar
 
         public void SetText()
         {
-            if (SelectedLogDataEntry is LogEntryWithData)
+            if (SelectedLogDataEntry is LogEntryWithData dataLogEntry)
             {
-                using (var context = new Context())
-                {
-                    //Если выбрано значение в списке, то просто сохраняем результат редактирования
-                    context.SaveChanges();
-                }
+                dataLogEntry.Save();
             }
             else if(SelectedLogDataEntry is PlaceholderLogDataEntry placeholderEntry)
             {

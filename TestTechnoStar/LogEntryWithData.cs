@@ -14,8 +14,21 @@ namespace TestTechnoStar
 
         public string Text
         {
-            get => DataEntryObject.Text;
-            set => DataEntryObject.Text = value;
+            get;
+            set;
+        }
+
+        public void Save()
+        {
+            using (var context = new Context())
+            {
+
+                DataEntryObject.Text = Text;
+                context.DataEntries.Attach(DataEntryObject);
+                context.Entry(DataEntryObject).Property(x => x.Text).IsModified = true;
+                context.SaveChanges();
+
+            }
         }
 
         public DateTime CreationDate => LogEntryObject.CreatedDate;
@@ -24,6 +37,7 @@ namespace TestTechnoStar
         {
             LogEntryObject = logEntry;
             DataEntryObject = dataEntry;
+            Text = DataEntryObject.Text;
         }
     }
 }
