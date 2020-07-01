@@ -50,11 +50,11 @@ namespace TestTechnoStar
             {
                 dataLogEntry.Save();
             }
-            else if(SelectedLogDataEntry is PlaceholderLogDataEntry placeholderEntry)
+            else if(SelectedLogDataEntry is PlaceholderLogDataEntry)
             {
                 //Если значение в списке не выбрано, добавим новую запись
                 AddNewEntry();
-                placeholderEntry.Text = string.Empty;
+                SelectedLogDataEntry.Text = string.Empty;
             }
         }
 
