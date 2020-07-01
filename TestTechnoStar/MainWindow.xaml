@@ -6,21 +6,18 @@
         xmlns:local="clr-namespace:TestTechnoStar"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <local:ViewModel></local:ViewModel>
-    </Window.DataContext>
     
     <Grid>
         <Grid.Resources>
             <CollectionViewSource x:Key="LogDataList" Source="{Binding Path=LogDataEntries}" />
         </Grid.Resources>    
         <StackPanel Margin="10"  HorizontalAlignment="Left"  Width ="250">
-            <TextBox Text="{Binding Path=SelectedLogDataEntry.Text, UpdateSourceTrigger=LostFocus}"></TextBox>
-            <Button HorizontalAlignment ="Right"  Width="100" Click="OnSaveButtonClick">Записать</Button>
+            <TextBox IsEnabled="{Binding Path=DataLoaded}"  Text="{Binding Path=SelectedLogDataEntry.Text, UpdateSourceTrigger=LostFocus}"></TextBox>
+            <Button IsEnabled="{Binding Path=DataLoaded}" HorizontalAlignment ="Right"  Width="100" Click="OnSaveButtonClick">Записать</Button>
             <ComboBox SelectedIndex ="0"  SelectedValue="{Binding Path=SelectedLogDataEntry, Mode=OneWayToSource}">
                 <ComboBox.Resources>
                     <DataTemplate DataType="{x:Type local:PlaceholderLogDataEntry}">
-                        <TextBlock Text="Не выбрано"></TextBlock>
+                        <TextBlock Text="Новый..."></TextBlock>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type local:LogEntryWithData}">
                         <Grid>

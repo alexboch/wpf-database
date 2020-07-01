@@ -23,6 +23,9 @@ namespace TestTechnoStar
         public MainWindow()
         {
             InitializeComponent();
+            var vm = new ViewModel();
+            vm.LoadDataAsync();
+            this.DataContext = vm;
         }
 
         private void OnSaveButtonClick(object sender, RoutedEventArgs e)

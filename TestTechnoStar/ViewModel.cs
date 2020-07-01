@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using TestTechnoStar.Database;
 
 namespace TestTechnoStar
@@ -16,6 +18,18 @@ namespace TestTechnoStar
         public ObservableCollection<ILogDataEntry> LogDataEntries { get; set; } = new ObservableCollection<ILogDataEntry>();
 
         private ILogDataEntry _selectedLogDataEntry;
+
+        private bool _dataLoaded;
+
+        public bool DataLoaded
+        {
+            get => _dataLoaded;
+            set
+            {
+                _dataLoaded = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Выбранное в списке значение
@@ -36,7 +50,7 @@ namespace TestTechnoStar
             {
                 using (var context = new Context())
                 {
-                    //Если выбрано значение в списке, то редактируем его
+                    //Если выбрано значение в списке, то просто сохраняем результат редактирования
                     context.SaveChanges();
                 }
             }
@@ -67,19 +81,23 @@ namespace TestTechnoStar
 
         private void RefreshList()
         {
-            LogDataEntries.Clear();
+            Application.Current.Dispatcher.Invoke(() => LogDataEntries.Clear());
             using (var context = new Context())
             {
  
                 foreach (var logEntry in context.LogEntries)
                 {
                     var dataLogEntry = new LogEntryWithData(logEntry, logEntry.Data);
-                    LogDataEntries.Add(dataLogEntry);
+                   Application.Current.Dispatcher.Invoke( () => LogDataEntries.Add(dataLogEntry));
                 }
             }
         }
 
-
+        public async void LoadDataAsync()
+        {
+            await Task.Factory.StartNew(RefreshList);
+            DataLoaded = true;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
