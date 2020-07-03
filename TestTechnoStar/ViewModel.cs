@@ -54,7 +54,6 @@ namespace TestTechnoStar
             {
                 //Если значение в списке не выбрано, добавим новую запись
                 AddNewEntry();
-                SelectedLogDataEntry.Text = string.Empty;
             }
         }
 
@@ -77,10 +76,8 @@ namespace TestTechnoStar
 
         private void RefreshList()
         {
-            Application.Current.Dispatcher.Invoke(() => LogDataEntries.Clear());
             using (var context = new Context())
             {
- 
                 foreach (var logEntry in context.LogEntries)
                 {
                     var dataLogEntry = new LogEntryWithData(logEntry, logEntry.Data);
@@ -91,6 +88,7 @@ namespace TestTechnoStar
 
         public async void LoadDataAsync()
         {
+            LogDataEntries.Clear();
             await Task.Factory.StartNew(RefreshList);
             DataLoaded = true;
         }
